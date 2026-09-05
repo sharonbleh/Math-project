@@ -1,0 +1,456 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{physics}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\setlength{\headheight}{14.5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{24BSE2113-D: PDE, Transforms \& Optimization}
+\fancyhead[R]{Phase 1: Theoretical Assignment}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+\newtcolorbox{resultbox}{
+    colback=blue!5!white,
+    colframe=blue!40!black,
+    boxrule=0.6pt,
+    arc=2pt,
+    left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newcommand{\groupNumber}{13}
+\newcommand{\studentOneName}{Chriss Mathew}
+\newcommand{\studentOneRoll}{23}
+\newcommand{\studentTwoName}{Rajan Devika S}
+\newcommand{\studentTwoRoll}{25}
+\newcommand{\studentThreeName}{Liju Renjitha Babu}
+\newcommand{\studentThreeRoll}{55}
+\newcommand{\studentFourName}{Sethuparvathy K J}
+\newcommand{\studentFourRoll}{58}
+\newcommand{\studentFiveName}{Sharon Thomas}
+\newcommand{\studentFiveRoll}{61}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    {\large \textbf{Saintgits College of Engineering (Autonomous)}\par}
+    {\large Department of Electronics and Communication Engineering\par}
+    \vspace{0.3cm}
+    \rule{\linewidth}{0.5pt}
+    \vspace{0.5cm}
+
+    {\Large \textbf{Course: 24BSE2113-D}\par}
+    {\large Partial Differential Equations, Transforms \& Optimization Techniques\par}
+    \vspace{1cm}
+
+    {\Large \textbf{Group Assignment \& Micro-Project-1}\par}
+    \vspace{0.2cm}
+    {\Large \textbf{Phase 1: Theoretical Assignment}\par}
+    \vspace{1cm}
+
+    {\Large \textit{Topic 1: Quantum Confinement}\par}
+    {\Large \textit{(The Schr\"odinger Wave Equation)}\par}
+
+    \vfill
+
+    \begin{center}
+    \begin{tabular}{ll}
+        \textbf{Group Number:} & \groupNumber \\[4pt]
+        \textbf{Student 1:} & \studentOneName \; (Roll No: \studentOneRoll) \\[2pt]
+        \textbf{Student 2:} & \studentTwoName \; (Roll No: \studentTwoRoll) \\[2pt]
+        \textbf{Student 3:} & \studentThreeName \; (Roll No: \studentThreeRoll) \\[2pt]
+        \textbf{Student 4:} & \studentFourName \; (Roll No: \studentFourRoll) \\[2pt]
+        \textbf{Student 5:} & \studentFiveName \; (Roll No: \studentFiveRoll) \\
+    \end{tabular}
+    \end{center}
+
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\section{Introduction}
+Quantum confinement is one of the defining phenomena of modern nanoscale
+electronics. When the physical dimensions of a semiconductor structure
+shrink down to the scale of a few nanometers -- comparable to the
+electron's own de Broglie wavelength -- the electron can no longer be
+treated as a free classical particle. Instead, it must be described as
+a matter wave whose behaviour is governed by quantum mechanics. This
+confinement forces the electron's allowed energies to become discrete
+rather than continuous, which is the physical basis for technologies
+such as quantum dots, quantum well lasers, and modern transistor
+channels.
+
+The simplest and most instructive model of this effect is the
+\emph{particle in an infinite one-dimensional potential well}: an
+electron trapped between two infinitely high potential barriers a
+distance $L$ apart. Despite its simplicity, this model captures the
+essential physics of confinement and provides a clean derivation of
+energy quantization using only the 1D Time-Dependent Schr\"odinger
+Equation, the method of separation of variables, and Fourier series
+representation.
+
+This report develops that derivation step by step: starting from the
+governing partial differential equation, separating it into space and
+time parts, applying the physical boundary conditions of the well,
+extracting the quantized energy levels, normalizing the resulting
+eigenfunctions, and finally assembling the general time-dependent wave
+function as a Fourier series expansion.
+
+\section{Objective}
+To analytically derive the quantized energy states and formulate the
+general wave function $\Psi(x,t)$, expressed as a Fourier series, for an
+electron trapped in a one-dimensional infinite potential well. The
+derivation is governed by the 1D Time-Dependent Schr\"odinger Equation
+and is obtained using the method of separation of variables.
+
+\section{Governing Equation and Setup}
+The state of a quantum particle is completely described by its wave
+function $\Psi(x,t)$, whose squared magnitude $|\Psi(x,t)|^2$ gives the
+probability density of finding the particle at position $x$ at time
+$t$. The evolution of this wave function in time is governed by the
+1D Time-Dependent Schr\"odinger Equation:
+\begin{equation}
+    i\hbar \, \frac{\partial \Psi(x,t)}{\partial t}
+    = -\frac{\hbar^2}{2m} \, \frac{\partial^2 \Psi(x,t)}{\partial x^2}
+    \label{eq:schrodinger}
+\end{equation}
+Here $\hbar$ is the reduced Planck constant, $m$ is the mass of the
+particle (the electron, in this problem), and the right-hand side is
+the kinetic energy operator acting on $\Psi$.
+
+For a particle confined to a 1D infinite potential well of length $L$,
+the potential energy function is
+\begin{equation}
+    V(x) =
+    \begin{cases}
+        0, & 0 \le x \le L \\
+        \infty, & \text{otherwise}
+    \end{cases}
+    \label{eq:potential}
+\end{equation}
+Inside the well the particle is completely free (no force acts on it),
+while outside the well the potential is infinite, meaning it would
+take infinite energy for the particle to be found there. Physically,
+this means the probability of finding the particle outside the well is
+exactly zero, and by continuity of the wave function this forces
+$\Psi$ itself to vanish at the walls. This gives the Dirichlet
+boundary conditions:
+\begin{equation}
+    \Psi(0,t) = 0 \qquad \text{and} \qquad \Psi(L,t) = 0 \qquad \forall\, t \ge 0
+    \label{eq:bc}
+\end{equation}
+These two conditions are what will later force the electron's energy
+to take only discrete, quantized values.
+
+\section{Method of Separation of Variables}
+Equation \eqref{eq:schrodinger} is a linear partial differential
+equation in two independent variables, $x$ and $t$. A standard and
+powerful technique for solving such linear PDEs -- and the one
+required by this assignment -- is separation of variables, where we
+look for solutions that factor into a purely spatial part and a purely
+temporal part:
+\begin{equation}
+    \Psi(x,t) = \psi(x)\,\phi(t)
+    \label{eq:product}
+\end{equation}
+This assumption is justified because the boundary conditions in
+Equation \eqref{eq:bc} apply only at fixed positions ($x=0,L$) for all
+time, which is exactly the situation in which a separable, or
+``stationary state,'' solution exists.
+
+Substituting Equation \eqref{eq:product} into Equation
+\eqref{eq:schrodinger} and using the product rule (noting that
+$\partial \Psi/\partial t = \psi(x)\,\phi'(t)$ and
+$\partial^2 \Psi/\partial x^2 = \psi''(x)\,\phi(t)$):
+\begin{equation}
+    i\hbar\, \psi(x)\,\frac{d\phi(t)}{dt}
+    = -\frac{\hbar^2}{2m}\, \phi(t)\, \frac{d^2\psi(x)}{dx^2}
+    \label{eq:substituted}
+\end{equation}
+
+Dividing both sides of Equation \eqref{eq:substituted} by the product
+$\psi(x)\phi(t)$ separates every term so that all $t$-dependence sits
+on the left and all $x$-dependence sits on the right:
+\begin{equation}
+    i\hbar\, \frac{1}{\phi(t)}\frac{d\phi(t)}{dt}
+    = -\frac{\hbar^2}{2m}\, \frac{1}{\psi(x)}\frac{d^2\psi(x)}{dx^2}
+    \label{eq:before-const}
+\end{equation}
+The left-hand side of Equation \eqref{eq:before-const} is a function of
+$t$ only, while the right-hand side is a function of $x$ only. Since
+$x$ and $t$ are independent variables, the only way an expression in
+$t$ alone can equal an expression in $x$ alone, for all $x$ and $t$
+simultaneously, is if both sides are equal to one and the same
+constant. We call this constant $E$, which will turn out to be the
+particle's total energy (its eigenvalue):
+\begin{equation}
+    i\hbar\, \frac{1}{\phi(t)}\frac{d\phi(t)}{dt}
+    = -\frac{\hbar^2}{2m}\, \frac{1}{\psi(x)}\frac{d^2\psi(x)}{dx^2}
+    = E
+    \label{eq:separated}
+\end{equation}
+This is the elimination-of-variables step: the single PDE in
+Equation \eqref{eq:schrodinger} has now been converted into two much
+simpler ordinary differential equations (ODEs) -- one purely in $t$
+and one purely in $x$ -- linked together only by the shared constant
+$E$.
+
+\section{Temporal Solution}
+Isolating the time-dependent equality from Equation
+\eqref{eq:separated}:
+\begin{equation}
+    i\hbar\, \frac{d\phi(t)}{dt} = E\,\phi(t)
+    \quad \Longrightarrow \quad
+    \frac{d\phi(t)}{dt} = -\frac{iE}{\hbar}\,\phi(t)
+    \label{eq:temporal-ode}
+\end{equation}
+Equation \eqref{eq:temporal-ode} is a first-order linear ODE of the
+standard form $\phi'(t) = \lambda \phi(t)$, whose solution is a simple
+exponential. Solving it gives
+\begin{equation}
+    \phi(t) = C \exp\!\left(-\frac{iEt}{\hbar}\right)
+    \label{eq:temporal}
+\end{equation}
+where $C$ is an integration constant that will later be absorbed into
+the normalization of the spatial part. Because the exponent is purely
+imaginary, $\phi(t)$ has constant magnitude $|C|$ and only rotates in
+phase as time progresses -- this is why solutions of this form are
+called \emph{stationary states}: the probability density
+$|\Psi(x,t)|^2 = |\psi(x)|^2 |\phi(t)|^2 = |\psi(x)|^2 |C|^2$ does not
+change with time, even though the wave function's phase does.
+
+\section{Spatial Solution and Boundary Conditions}
+Isolating the space-dependent equality from Equation
+\eqref{eq:separated}:
+\begin{equation}
+    -\frac{\hbar^2}{2m}\, \frac{d^2\psi(x)}{dx^2} = E\,\psi(x)
+    \quad \Longrightarrow \quad
+    \frac{d^2\psi(x)}{dx^2} + k^2 \psi(x) = 0,
+    \qquad k = \frac{\sqrt{2mE}}{\hbar}
+    \label{eq:spatial-ode}
+\end{equation}
+Equation \eqref{eq:spatial-ode} has exactly the same form as the
+classical simple-harmonic-oscillator equation, and so its general
+solution is a combination of sine and cosine:
+\begin{equation}
+    \psi(x) = A\sin(kx) + B\cos(kx)
+    \label{eq:spatial-general}
+\end{equation}
+The constant $k$ here plays the role of a spatial wavenumber, related
+to the particle's momentum by $p = \hbar k$.
+
+\subsection*{Applying the Boundary Conditions}
+We now use the physical boundary conditions from Equation
+\eqref{eq:bc} to pin down the constants $A$, $B$, and the allowed
+values of $k$.
+
+\textbf{At $x = 0$:}
+\begin{equation}
+    \psi(0) = A\sin(0) + B\cos(0) = A(0) + B(1) = B = 0
+    \label{eq:bc-left}
+\end{equation}
+Since $\sin(0)=0$ and $\cos(0)=1$, Equation \eqref{eq:bc-left} forces
+$B=0$ directly, leaving the simplified spatial solution
+$\psi(x) = A\sin(kx)$.
+
+\textbf{At $x = L$:}
+\begin{equation}
+    \psi(L) = A\sin(kL) = 0
+    \label{eq:bc-right}
+\end{equation}
+There are two ways to satisfy Equation \eqref{eq:bc-right}: either
+$A = 0$, which is the trivial (physically meaningless, ``no particle
+at all'') solution, or $\sin(kL) = 0$ with $A \neq 0$. We keep the
+non-trivial option, which requires
+\begin{equation}
+    \sin(kL) = 0 \quad \Longrightarrow \quad k_n L = n\pi,
+    \qquad n = 1, 2, 3, \dots
+    \label{eq:quantization-condition}
+\end{equation}
+(the case $n=0$ is excluded because it forces $\psi(x)\equiv 0$
+everywhere, again describing no particle). Solving Equation
+\eqref{eq:quantization-condition} for $k$ gives the allowed,
+discrete wavenumbers:
+\begin{equation}
+    \boxed{k_n = \dfrac{n\pi}{L}}
+    \label{eq:kn}
+\end{equation}
+This is the heart of quantum confinement: the boundary conditions
+permit only standing waves for which a whole number of half-wavelengths
+fit exactly inside the well, exactly analogous to the allowed standing
+wave modes on a guitar string fixed at both ends.
+
+\section{Derivation of Quantized Energy States}
+Having restricted $k$ to the discrete values $k_n$, we now translate
+this restriction back into a restriction on energy. Substituting
+$k_n = \dfrac{n\pi}{L}$ into the definition $k = \dfrac{\sqrt{2mE}}{\hbar}$
+from Equation \eqref{eq:spatial-ode}:
+\begin{equation}
+    \frac{n\pi}{L} = \frac{\sqrt{2mE_n}}{\hbar}
+    \label{eq:k-to-E}
+\end{equation}
+Squaring both sides of Equation \eqref{eq:k-to-E} removes the square
+root:
+\begin{equation}
+    \frac{n^2\pi^2}{L^2} = \frac{2mE_n}{\hbar^2}
+\end{equation}
+and solving for $E_n$ gives the quantized energy levels of the
+particle in a box:
+\begin{resultbox}
+\begin{equation}
+    E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2}, \qquad n = 1, 2, 3, \dots
+    \label{eq:energy}
+\end{equation}
+\end{resultbox}
+This is a striking departure from classical mechanics: a classical
+particle bouncing between two walls could have any energy whatsoever,
+but a quantum particle confined the same way can only occupy this
+discrete ``ladder'' of energies, spaced further and further apart as
+$n$ increases (since $E_n \propto n^2$). Note also that $E_n$ grows as
+$1/L^2$ -- the more tightly the electron is confined, the larger the
+spacing between its allowed energy levels becomes. This inverse-square
+dependence on confinement length is precisely why quantum confinement
+effects become significant only at the nanoscale.
+
+\section{Normalization of the Spatial Eigenmodes}
+The wave function must satisfy one more physical requirement: since
+$|\psi_n(x)|^2$ represents a probability density, the total
+probability of finding the particle \emph{somewhere} inside the well
+must equal exactly 1. This normalization condition fixes the
+remaining constant $A$:
+\begin{equation}
+    \int_0^L |\psi_n(x)|^2\, dx = 1
+    \quad \Longrightarrow \quad
+    A^2 \int_0^L \sin^2\!\left(\frac{n\pi x}{L}\right) dx = 1
+    \label{eq:norm-integral}
+\end{equation}
+To evaluate the integral in Equation \eqref{eq:norm-integral}, we use
+the half-angle identity $\sin^2\theta = \dfrac{1-\cos 2\theta}{2}$:
+\begin{equation}
+    \int_0^L \sin^2\!\left(\frac{n\pi x}{L}\right) dx
+    = \int_0^L \frac{1}{2}\left[1 - \cos\!\left(\frac{2n\pi x}{L}\right)\right] dx
+    = \frac{L}{2} - \underbrace{\frac{L}{4n\pi}\sin\!\left(\frac{2n\pi x}{L}\right)\Big|_0^L}_{=\,0}
+    = \frac{L}{2}
+\end{equation}
+The cosine term integrates to a sine that vanishes at both $x=0$ and
+$x=L$ for every integer $n$, leaving simply $L/2$. Substituting this
+back into Equation \eqref{eq:norm-integral}:
+\begin{equation}
+    A^2 \cdot \frac{L}{2} = 1
+    \quad \Longrightarrow \quad
+    A = \sqrt{\frac{2}{L}}
+\end{equation}
+Hence the normalized spatial eigenfunctions are
+\begin{equation}
+    \psi_n(x) = \sqrt{\frac{2}{L}}\, \sin\!\left(\frac{n\pi x}{L}\right)
+    \label{eq:psin}
+\end{equation}
+These functions form an orthonormal set on $[0,L]$, meaning
+$\int_0^L \psi_n(x)\psi_m(x)\,dx = 0$ for $n \neq m$ and $=1$ for
+$n=m$ -- a property that will be used directly in the next section to
+extract the Fourier coefficients.
+
+\section{Final Fourier Series Solution}
+Combining the normalized spatial eigenfunction, Equation
+\eqref{eq:psin}, with the temporal solution, Equation
+\eqref{eq:temporal} (absorbing the constant $C$ into $A$), gives the
+complete stationary-state (standing-wave) solution for a single mode
+$n$:
+\begin{equation}
+    \Psi_n(x,t) = \sqrt{\frac{2}{L}}\, \sin\!\left(\frac{n\pi x}{L}\right)
+    \exp\!\left(-i\,\frac{E_n t}{\hbar}\right)
+    \label{eq:mode-n}
+\end{equation}
+Each $\Psi_n(x,t)$ individually satisfies the Schr\"odinger equation
+and both boundary conditions. However, the electron is not restricted
+to occupying only one of these modes; because Equation
+\eqref{eq:schrodinger} is linear, \emph{any} linear combination of
+solutions is itself a solution. This is the superposition principle,
+and it lets us build the most general possible wave function as a sum
+over all the allowed modes -- precisely a Fourier series in the
+spatial sine-basis $\{\psi_n(x)\}$:
+\begin{resultbox}
+\begin{equation}
+    \Psi(x,t) = \sum_{n=1}^{\infty} c_n \sqrt{\frac{2}{L}}\,
+    \sin\!\left(\frac{n\pi x}{L}\right)
+    \exp\!\left(-i\, \frac{n^2\pi^2\hbar}{2mL^2}\, t\right)
+    \label{eq:general-solution}
+\end{equation}
+\end{resultbox}
+
+The Fourier coefficients $c_n$ are not free parameters; they are
+completely determined by the particle's initial wave function
+$\Psi(x,0)$ at $t=0$. Setting $t=0$ in Equation
+\eqref{eq:general-solution} gives
+$\Psi(x,0) = \sum_n c_n \psi_n(x)$, and because the $\psi_n(x)$ are
+orthonormal, we can project out any single coefficient by multiplying
+both sides by $\psi_n(x)$ and integrating over $[0,L]$:
+\begin{equation}
+    c_n = \int_0^L \Psi(x,0)\, \sqrt{\frac{2}{L}}\, \sin\!\left(\frac{n\pi x}{L}\right) dx
+    \label{eq:cn}
+\end{equation}
+
+\subsection*{Physical Interpretation}
+Equation \eqref{eq:general-solution} states that \emph{any} allowed
+wave function inside the box, however complicated, can be written as a
+weighted sum of the discrete standing-wave modes $\psi_n(x)$, each one
+oscillating in time at its own characteristic frequency $E_n/\hbar$.
+The weights $c_n$ are set entirely by the initial condition through
+Equation \eqref{eq:cn}. This is exactly the same eigenfunction-expansion
+idea used to build an ordinary Fourier series on an interval -- only
+here the ``basis'' functions are not a generic sine/cosine set but the
+specific quantized eigenmodes forced upon the system by the physical
+boundaries of the potential well.
+
+\section{Conclusion}
+Starting from the 1D Time-Dependent Schr\"odinger Equation, this
+report has shown, step by step, how confining an electron to a region
+of length $L$ with infinitely high walls leads directly to
+quantization. Separation of variables split the governing PDE into an
+exponential temporal equation and a harmonic-oscillator-type spatial
+equation. Applying the physical boundary conditions
+$\Psi(0,t)=\Psi(L,t)=0$ restricted the spatial solutions to a discrete
+family of sine modes, $\psi_n(x) = \sqrt{2/L}\,\sin(n\pi x/L)$, and
+correspondingly restricted the particle's energy to the discrete
+ladder $E_n = n^2\pi^2\hbar^2/(2mL^2)$.
+
+Combining the normalized spatial modes with their time evolution and
+invoking the superposition principle produced the general solution as
+a Fourier series, Equation \eqref{eq:general-solution}, with
+coefficients $c_n$ fixed by the initial state via Equation
+\eqref{eq:cn}. Two engineering conclusions follow directly from this
+derivation. First, confinement is what \emph{creates} discreteness --
+a free electron ($L \to \infty$) has a continuous energy spectrum, but
+as $L$ shrinks the energy levels spread apart as $1/L^2$, which is
+precisely the mechanism exploited in quantum dots, quantum wells, and
+nanoscale transistor channels to engineer specific, tunable electronic
+and optical properties. Second, the Fourier series structure of the
+general solution shows that the time evolution of \emph{any} initial
+electron state in such a structure can be predicted exactly, simply by
+decomposing it into these quantized eigenmodes -- a technique that
+extends naturally to more realistic 2D and 3D confinement geometries
+used in real semiconductor device design.
+
+\end{document}
